@@ -1,20 +1,28 @@
 pipeline {
-    agent any 
-    stages {
-        stage('Build') { 
-            steps {
-                echo 'Building the application'
-            }
-        }
-        stage('Test') { 
-            steps {
-                echo 'Testing the application'
-            }
-        }
-        stage('Deploy') { 
-            steps {
-                echo 'Deploying the application'// 
-            }
-        }
+  agent any
+    
+  tools {nodejs "node"}
+    
+  stages {
+        
+    stage('Git') {
+      steps {
+        git 'https://github.com/Roua21/small_projects.git'
+      }
     }
+     
+    stage('Build') {
+      steps {
+        sh 'npm install'
+         sh '<<Build Command>>'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'node test'
+      }
+    }
+  }
 }
